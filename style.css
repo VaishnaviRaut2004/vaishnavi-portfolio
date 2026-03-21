@@ -1,0 +1,115 @@
+/* Custom Styles & Utilities */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+html {
+    scroll-behavior: smooth;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.dark ::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+    background: #c7c7c7;
+    border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb {
+    background: #334155;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #6366f1;
+}
+
+/* Glassmorphism Classes */
+.glass-nav {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+.dark .glass-nav {
+    background: rgba(15, 23, 42, 0.7);
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.dark .glass-card {
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Navigation Link Underline Animation */
+.nav-link {
+    position: relative;
+    font-weight: 500;
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background: linear-gradient(90deg, #6366f1, #ec4899);
+    transition: width 0.3s ease;
+}
+.nav-link:hover::after, .nav-link.active::after {
+    width: 100%;
+}
+
+/* Custom Selection */
+::selection {
+    background: #6366f1;
+    color: white;
+}
+
+/* Timeline specific styles */
+@media (min-width: 768px) {
+    .right-timeline .order-1 { order: 2; }
+    .right-timeline .z-20 { order: 1; }
+    .right-timeline .w-5\/12 { order: 0; }
+    
+    .left-timeline .order-1 { order: 0; }
+    .left-timeline .z-20 { order: 1; }
+    .left-timeline .w-5\/12 { order: 2; }
+}
+
+/* Cursor Customization (Optional bonus) */
+.custom-cursor {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #6366f1;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+/* Fix Aos overflow issues */
+body {
+    overflow-x: hidden;
+}
+
+/* Typewriter Cursor blinking */
+.typed-cursor {
+    font-size: 1.5em;
+    color: #6366f1;
+    animation: blink 1s infinite;
+}
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
