@@ -192,77 +192,47 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 9. Form Submission Hook
-    document.getElementById('contact-form')?.addEventListener('submit', (e) => {
+    const form = document.getElementById("contact-form");
+
+    if (form) {
+      form.addEventListener("submit", async function (e) {
         e.preventDefault();
-        
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const message = document.getElementById('message').value.trim();
 
-        // Check if required fields are empty
+        console.log("FORM SUBMITTED");
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const message = document.getElementById("message").value.trim();
+
         if (!name || !email || !message) {
-            alert("Please fill in all the required fields.");
-            return;
+          alert("Please fill all fields");
+          return;
         }
 
-        // Validate email format
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            alert("Please enter a valid email address.");
-            return;
-        }
-
-        const btn = e.target.querySelector('button[type="submit"]');
-        const originalText = btn.innerHTML;
-        
-        // Disable button while sending
-        btn.disabled = true;
-        btn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin ml-2"></i>';
-        
-        console.log("Sending email...");
-
-        // Send email using Vercel API (Nodemailer)
-        fetch('/api/contact', {
-            method: 'POST',
+        try {
+          const response = await fetch("/api/contact", {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+              "Content-Type": "application/json"
             },
             body: JSON.stringify({ name, email, message })
-        }).then(async (response) => {
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.error || 'Failed to send email');
-            }
-            // Success
-            console.log("SUCCESS!", data.message);
-            alert("Message sent successfully!");
-            btn.innerHTML = 'Message sent successfully! <i class="fas fa-check ml-2"></i>';
-            btn.classList.replace('from-primary', 'from-green-500');
-            btn.classList.replace('to-secondary', 'to-emerald-500');
-            e.target.reset();
-            
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                btn.classList.replace('from-green-500', 'from-primary');
-                btn.classList.replace('to-emerald-500', 'to-secondary');
-            }, 4000);
-        }).catch((err) => {
-            // Error
-            console.error("FAILED to send email:", err);
-            alert("Failed to send message: " + err.message);
-            btn.innerHTML = 'Failed to Send <i class="fas fa-times ml-2"></i>';
-            btn.classList.replace('from-primary', 'from-red-500');
-            btn.classList.replace('to-secondary', 'to-red-600');
-            
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                btn.classList.replace('from-red-500', 'from-primary');
-                btn.classList.replace('to-red-600', 'to-secondary');
-            }, 4000);
-        });
-    });
+          });
+
+          const data = await response.json();
+          console.log("RESPONSE:", data);
+
+          if (response.ok) {
+            alert("✅ Message sent successfully!");
+            form.reset();
+          } else {
+            alert("❌ Failed: " + data.message);
+          }
+        } catch (error) {
+          console.error("ERROR:", error);
+          alert("❌ Failed to send message");
+        }
+      });
+    }
 
     // 10. Hide Resume if not found
     const resumeBtn = document.getElementById('resume-btn');
