@@ -84,18 +84,6 @@ html {
     .left-timeline .w-5\/12 { order: 2; }
 }
 
-/* Cursor Customization (Optional bonus) */
-.custom-cursor {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #6366f1;
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: width 0.2s, height 0.2s, background-color 0.2s;
-}
 
 /* Fix Aos overflow issues */
 body {

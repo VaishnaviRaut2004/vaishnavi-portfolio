@@ -1,8 +1,7 @@
 // Run when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Setup handled by Vercel Serverless Function (Nodemailer)
-
+    // Client-side execution only
     // 1. Loader removal
     setTimeout(() => {
         const loader = document.getElementById('loader');
@@ -190,49 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('scrollToTop').addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-
-    // 9. Form Submission Hook
-    const form = document.getElementById("contact-form");
-
-    if (form) {
-      form.addEventListener("submit", async function (e) {
-        e.preventDefault();
-
-        console.log("FORM SUBMITTED");
-
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const message = document.getElementById("message").value.trim();
-
-        if (!name || !email || !message) {
-          alert("Please fill all fields");
-          return;
-        }
-
-        try {
-          const response = await fetch("/api/contact", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ name, email, message })
-          });
-
-          const data = await response.json();
-          console.log("RESPONSE:", data);
-
-          if (response.ok) {
-            alert("✅ Message sent successfully!");
-            form.reset();
-          } else {
-            alert("❌ Failed: " + data.message);
-          }
-        } catch (error) {
-          console.error("ERROR:", error);
-          alert("❌ Failed to send message");
-        }
-      });
-    }
 
     // 10. Hide Resume if not found
     const resumeBtn = document.getElementById('resume-btn');
